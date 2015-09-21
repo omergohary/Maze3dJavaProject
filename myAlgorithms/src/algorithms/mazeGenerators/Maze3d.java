@@ -10,6 +10,7 @@
 
 package algorithms.mazeGenerators;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class Maze3d 
@@ -34,6 +35,30 @@ public class Maze3d
 				for (int z=0; z<dimZ; z++)
 				{
 					this.m_maze3d[x][y][z] = WALL;
+				}
+			}
+		}
+	}
+	
+	/** Additional C-TOR -- for part 3 -- build maze according to byteArray **/
+	public Maze3d(byte[] mazeArray)
+	{
+		ByteBuffer bufferObject = ByteBuffer.allocate(mazeArray.length).put(mazeArray);
+		
+		m_dimX = bufferObject.getInt();
+		m_dimY = bufferObject.getInt();
+		m_dimZ = bufferObject.getInt();
+		
+		m_startPosition = new Position(bufferObject.getInt(), bufferObject.getInt(), bufferObject.getInt());
+		m_endPosition   = new Position(bufferObject.getInt(), bufferObject.getInt(), bufferObject.getInt());
+		
+		for(int x=0; x<m_dimX; x++)
+		{
+			for (int y=0; y<m_dimY; y++)
+			{
+				for (int z=0; z<m_dimZ; z++)
+				{
+					m_maze3d[x][y][z] = (int)(bufferObject.get());
 				}
 			}
 		}
@@ -211,6 +236,39 @@ public class Maze3d
 			System.out.println("},");
 		}
 	}
+	
+	public byte[] toByteArray()
+	{
+		ByteBuffer bufferObject = ByteBuffer.allocate(3 * SIZE_OF_DIMENSION  +    // the x,y,z dimensions
+													  2 * SIZE_OF_POSITION   +    // start point and end point
+													  m_dimX * m_dimY * m_dimZ);  // The size of the maze in byteArray
+		
+		bufferObject.putInt(m_dimX);
+		bufferObject.putInt(m_dimY);
+		bufferObject.putInt(m_dimZ);
+		
+		bufferObject.putInt(m_startPosition.getX());
+		bufferObject.putInt(m_startPosition.getY());
+		bufferObject.putInt(m_startPosition.getZ());
+		
+		bufferObject.putInt(m_endPosition.getX());
+		bufferObject.putInt(m_endPosition.getY());
+		bufferObject.putInt(m_endPosition.getZ());
+		
+		for(int x=0; x<m_dimX; x++)
+		{
+			for (int y=0; y<m_dimY; y++)
+			{
+				for (int z=0; z<m_dimZ; z++)
+				{
+					bufferObject.put((byte)(m_maze3d[x][y][z]));
+				}
+			}
+		}
+			
+			
+		return bufferObject.array();
+	}
 
 	
 	/******************************** MEMBERS ***********************************/
@@ -235,6 +293,9 @@ public class Maze3d
 	public static final int EMPTY 	   = 0;
 
 	public static final int INVALID_INDEX   = -2; 
+	
+	public static final int SIZE_OF_DIMENSION  = 4;   // (sizeof(int))
+	public static final int SIZE_OF_POSITION   = 3*4; // 3*(sizeof(int))
 
 
 }
