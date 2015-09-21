@@ -13,17 +13,28 @@ package algorithms.io;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
-
+/**
+ * This class represents a decompressor of byteArray according to maze3d object
+ * It extents the InputStream and by that it is complying with the decorator pattern
+ */
 public class MyDecompressorInputStream extends InputStream
 {
 	
+	/**
+	 * C-Tor
+	 * @param in - the stream in (to read from)
+	 */
 	MyDecompressorInputStream(InputStream in)
 	{
 		m_in 		= in;
 		m_bufferIndex = 0;
 	}
 	
+	/**
+	 * InputStream function that must implement.
+	 * It is responsible on taking the compressed bytes and padding them to the originally maze.
+	 * @return 0 for success -1 for failed
+	 */
 	@Override
 	public int read() throws IOException 
 	{
@@ -42,11 +53,17 @@ public class MyDecompressorInputStream extends InputStream
 		// update file index
 		m_bufferIndex = m_bufferIndex + m_newCounter;
 		
-		return 1;
+		return 0;
 	}
 
-	
-	@Override
+	/**
+	 * This function is overloading of the previous function. 
+	 * It actually read from the file and de-compress the byteArray
+	 * 
+	 * @outBuffer the out param (byte array) to fill with the de-compressed maze
+	 * 
+	 * @return 0 for succees, -1 for failed
+	 */
 	public int read(byte[] outBuffer) throws IOException 
 	{
 		// save the pointer in a data member
@@ -56,6 +73,7 @@ public class MyDecompressorInputStream extends InputStream
 		if (m_in.read(outBuffer, START_OF_FILE, MAZE_PREFIX_DETAILS_LEN) != MAZE_PREFIX_DETAILS_LEN)
 		{
 			System.out.println("failed to read prefix details");
+			return -1;
 		}
 		
 		m_bufferIndex = MAZE_PREFIX_DETAILS_LEN;
@@ -69,27 +87,28 @@ public class MyDecompressorInputStream extends InputStream
 			read();
 			
 			// reload new bytes
-			m_newCell    = (byte) m_in.read();
 			m_newCounter = (byte) m_in.read();
+			m_newCell    = (byte) m_in.read();
 		}
 		
-		return 1;
+		return 0;
 	}
 	
 
 	/************************** Members ***************************/
+	
+	/** The stream to read from **/
 	InputStream m_in;
 	
-	byte m_newCell;
-	byte m_newCounter;
-	
-	int m_bufferIndex;
-	
+	/** The necessary data members to the de-compress functionality **/
+	byte   m_newCell;
+	byte   m_newCounter;
+	int    m_bufferIndex;
 	byte[] m_outBuffer;
 	
+	/** Consts **/
 	public static final int MAZE_PREFIX_DETAILS_LEN = 9*4; // 9 integers
 	public static final int START_OF_FILE 			= 0;
 	public static final int EOF 					= -1;
-
 
 }

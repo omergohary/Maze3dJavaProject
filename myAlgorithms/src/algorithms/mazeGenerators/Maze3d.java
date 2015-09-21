@@ -10,6 +10,7 @@
 
 package algorithms.mazeGenerators;
 
+import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -45,12 +46,16 @@ public class Maze3d
 	{
 		ByteBuffer bufferObject = ByteBuffer.allocate(mazeArray.length).put(mazeArray);
 		
+		bufferObject.position(0);
+						
 		m_dimX = bufferObject.getInt();
 		m_dimY = bufferObject.getInt();
 		m_dimZ = bufferObject.getInt();
 		
 		m_startPosition = new Position(bufferObject.getInt(), bufferObject.getInt(), bufferObject.getInt());
 		m_endPosition   = new Position(bufferObject.getInt(), bufferObject.getInt(), bufferObject.getInt());
+		
+		m_maze3d = new int[m_dimX][m_dimY][m_dimZ];
 		
 		for(int x=0; x<m_dimX; x++)
 		{
@@ -127,7 +132,7 @@ public class Maze3d
 		this.m_endPosition.y = position.y;
 		this.m_endPosition.z = position.z;
 	}
-	
+		
 	/** Method that return the possible moves of specific position **/
 	public String[] getPossibleMovesStrings(Position position)
 	{
@@ -237,6 +242,26 @@ public class Maze3d
 		}
 	}
 	
+	public int[][][] getMaze3d() 
+	{
+		return m_maze3d;
+	}
+	
+	public int getDimX() 
+	{
+		return m_dimX;
+	}
+
+	public int getDimY() 
+	{
+		return m_dimY;
+	}
+
+	public int getDimZ() 
+	{
+		return m_dimZ;
+	}
+
 	public byte[] toByteArray()
 	{
 		ByteBuffer bufferObject = ByteBuffer.allocate(3 * SIZE_OF_DIMENSION  +    // the x,y,z dimensions
@@ -269,14 +294,42 @@ public class Maze3d
 			
 		return bufferObject.array();
 	}
-
+	
+	public boolean equals(Maze3d mazeToCompare)
+	{
+		if ((mazeToCompare.getGoalPosition().equals(this.m_endPosition)    == true) &&
+			(mazeToCompare.getStartPosition().equals(this.m_startPosition) == true) &&
+			(mazeToCompare.getDimX() == this.m_dimX) 								&&
+			(mazeToCompare.getDimY() == this.m_dimY) 								&&
+			(mazeToCompare.getDimZ() == this.m_dimZ))
+		{
+			for(int x=0; x<m_dimX; x++)
+			{
+				for (int y=0; y<m_dimY; y++)
+				{
+					for (int z=0; z<m_dimZ; z++)
+					{
+						if (mazeToCompare.getMaze3d()[x][y][z] != this.m_maze3d[x][y][z])
+						{
+							return false;
+						}
+					}
+				}
+			}
+			
+			// everything is the same
+			return true;
+		}
+		
+		return false;
+	}
 	
 	/******************************** MEMBERS ***********************************/
 	
 
 	/** The maze itself **/
 	private int[][][] m_maze3d;
-	
+
 	/** The size of each dimension in the maze **/
 	private int m_dimX;
 	private int m_dimY;
