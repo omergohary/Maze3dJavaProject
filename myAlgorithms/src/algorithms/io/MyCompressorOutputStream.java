@@ -8,7 +8,7 @@
  * @date    20/09/2015
  */
 
-package io;
+package algorithms.io;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -78,8 +78,6 @@ public class MyCompressorOutputStream extends OutputStream
 		
 		// update write function that this is the EOF.
 		write(CELL_END_VALUE);
-		
-		m_out.close();
 	}
 	
 	private void writeByteAndCounter(byte byteToWrite, int counterToWrite) throws IOException
@@ -88,8 +86,8 @@ public class MyCompressorOutputStream extends OutputStream
 		{
 			System.out.println("invalid args to write");
 		}
-		m_out.write(byteToWrite);
 		m_out.write((byte)(counterToWrite));
+		m_out.write(byteToWrite);
 	}
 	
 	/************************** Members ***************************/
