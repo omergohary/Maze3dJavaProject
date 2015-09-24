@@ -179,6 +179,52 @@ public class Maze3d
 		
 		return maze2d;
 	}
+	
+	public int[][] getCrossSectionByY(int y)
+	{
+		if ((y < 0) || (y>= this.m_dimY))
+		{
+			IndexOutOfBoundsException invalidIndex = new IndexOutOfBoundsException();
+			
+			throw invalidIndex;
+		}
+		
+		int[][] maze2d = new int[this.m_dimX][this.m_dimZ];
+		
+		// copy values from the 3d maze to the required 2d maze
+		for (int x=0; x<this.m_dimX; x++)
+		{
+			for (int z=0; z<this.m_dimZ; z++)
+			{
+				maze2d[x][z] = this.m_maze3d[x][y][z];
+			}
+		}
+		
+		return maze2d;
+	}
+	
+	public int[][] getCrossSectionByZ(int z)
+	{
+		if ((z < 0) || (z>= this.m_dimZ))
+		{
+			IndexOutOfBoundsException invalidIndex = new IndexOutOfBoundsException();
+			
+			throw invalidIndex;
+		}
+		
+		int[][] maze2d = new int[this.m_dimX][this.m_dimY];
+		
+		// copy values from the 3d maze to the required 2d maze
+		for (int x=0; x<this.m_dimX; x++)
+		{
+			for (int y=0; y<this.m_dimY; y++)
+			{
+				maze2d[x][y] = this.m_maze3d[x][y][z];
+			}
+		}
+		
+		return maze2d;
+	}
 
 	public boolean isInMazeRangeAndCheckValue(int x, int y, int z, int valueToCheck)
 	{

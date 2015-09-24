@@ -62,7 +62,7 @@ public class MyDecompressorInputStream extends InputStream
 	 * 
 	 * @outBuffer the out param (byte array) to fill with the de-compressed maze
 	 * 
-	 * @return 0 for succees, -1 for failed
+	 * @return 0 for success, -1 for failed
 	 */
 	public int read(byte[] outBuffer) throws IOException 
 	{
