@@ -23,7 +23,7 @@ public class MyCompressorOutputStream extends OutputStream
 	 * C-Tor
 	 * @param out - the stream out
 	 */
-	MyCompressorOutputStream(OutputStream out)
+	public MyCompressorOutputStream(OutputStream out)
 	{
 		m_out         = out;
 		m_lastCell 	  = CELL_START_VALUE;

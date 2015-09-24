@@ -43,7 +43,7 @@ public class AStarSearcher<T> extends BFS<T>
 	@Override
 	public Solution<T> search(Searchable<T> s) 
 	{
-		openList = new PriorityQueue<>(999999999, new HeuristicComparator<>(m_heuristic, s.getGoalState()));
+		openList = new PriorityQueue<>(10000000, new HeuristicComparator<>(m_heuristic, s.getGoalState()));
 		return super.search(s); // super = BFS
 	}
 	

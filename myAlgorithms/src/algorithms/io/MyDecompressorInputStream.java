@@ -24,7 +24,7 @@ public class MyDecompressorInputStream extends InputStream
 	 * C-Tor
 	 * @param in - the stream in (to read from)
 	 */
-	MyDecompressorInputStream(InputStream in)
+	public MyDecompressorInputStream(InputStream in)
 	{
 		m_in 		= in;
 		m_bufferIndex = 0;

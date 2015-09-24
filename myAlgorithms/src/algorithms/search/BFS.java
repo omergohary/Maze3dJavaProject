@@ -36,7 +36,7 @@ public class BFS<T> extends CommonSearcher<T>
 			}
 		};
 		
-		openList = new PriorityQueue<State<T>>(999999999,bfsComparator);
+		openList = new PriorityQueue<State<T>>(10000000,bfsComparator);
 	}
 
 	
