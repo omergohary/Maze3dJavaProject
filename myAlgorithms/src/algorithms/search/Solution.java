@@ -31,6 +31,23 @@ public class Solution<T>
 	}
 	
 	/**
+	 * @return the list size
+	 */
+	public int size()
+	{
+		return m_list.size();
+	}
+	
+	/**
+	 * @param index - the index in list
+	 * @return State<T> that represents the required state
+	 */
+	public State<T> getStateByIndex(int index)
+	{
+		return m_list.get(index);
+	}
+	
+	/**
 	 * Prints the solution
 	 */
 	public void printSolution()
