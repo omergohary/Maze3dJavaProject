@@ -12,7 +12,7 @@ package algorithms.search;
 import java.util.PriorityQueue;
 
 /**
- * The A Star class that extenst the BFS searcher
+ * The A Star class that extends the BFS searcher
  * 
  * @param <T> the type of template
  */
@@ -31,10 +31,16 @@ public class AStarSearcher<T> extends BFS<T>
 	 * Set the heuristic
 	 *
 	 * @param heuristic - new heuristic to set
+	 * @return boolean - true if succeeded, false otherwise
 	 */
-	public void setHeuristic(Heuristic<T> heuristic) 
+	public boolean setHeuristic(Heuristic<T> heuristic) 
 	{
-		this.m_heuristic = heuristic;
+		if (heuristic != null)
+		{
+			this.m_heuristic = heuristic;
+			return true;
+		}
+		return false;
 	}
 
 	/**	

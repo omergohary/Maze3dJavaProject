@@ -60,7 +60,7 @@ public class MyDecompressorInputStream extends InputStream
 	 * This function is overloading of the previous function. 
 	 * It actually read from the file and de-compress the byteArray
 	 * 
-	 * @outBuffer the out param (byte array) to fill with the de-compressed maze
+	 * @pararm outBuffer - the out param (byte array) to fill with the de-compressed maze
 	 * 
 	 * @return 0 for success, -1 for failed
 	 */

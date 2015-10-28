@@ -19,7 +19,7 @@ public class State<T>
 {
 	/**
 	 * C-Tor
-	 * @param type of state
+	 * @param state - type of state
 	 */
     public State(T state)
     {   

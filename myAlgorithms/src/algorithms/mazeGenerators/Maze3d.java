@@ -69,7 +69,14 @@ public class Maze3d
 		}
 	}
 	
-	/** Setter of the maze3d **/
+	/** Setter of the maze3d
+	 * 
+	 * @param x       - x dimension to set
+	 * @param y       - y dimension to set
+	 * @param z		  - z dimetsion to set
+	 * @param value   - the value to set in this position
+	 * @return true if succeeded, false otherwise
+	 */
 	public boolean setValueInMaze(int x, int y, int z, int value) 
 	{
 		// value test
